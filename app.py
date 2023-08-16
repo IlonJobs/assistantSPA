@@ -11,7 +11,7 @@ import numpy as np
 
 def main():
     st.set_page_config(page_title="Help assistant")
-    st.header('Help assistant title')
+    st.header('Help assistant header')
 
     # Initialize chat history
     if "messages" not in st.session_state:
