@@ -40,9 +40,9 @@ def main():
     # Display chat messages from history on app rerun
     for mes in st.session_state.messages:
         if mes.type=='human':
-            message(mes.content, is_user=True)
+            message(mes.content, is_user=True,allow_html=True)
         elif mes.type=='ai':
-            message(mes.content)
+            message(mes.content,allow_html=True)
 
 
     # React to user input
@@ -55,7 +55,7 @@ def main():
         with st.spinner('Thinking...'):
             response = chat(st.session_state.messages)
 
-        message(response.content)  # align's the message to the right
+        message(response.content,allow_html=True)  # align's the message to the right
         # Add assistant response to chat history
         # st.session_state.messages.append({"role": "assistant", "content": response})
         st.session_state.messages.append(AIMessage(content=response.content))
