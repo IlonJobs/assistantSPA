@@ -1,7 +1,2 @@
 streamlit
-streamlit_chat
-langchain[all]
-langchain.chat_models
-langchain.schema
-ChatOpenAI
-openai
+langchain
