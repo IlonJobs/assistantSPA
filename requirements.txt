@@ -3,3 +3,4 @@ streamlit_chat
 langchain
 langchain.chat_models
 langchain.schema
+ChatOpenAI
