@@ -2,6 +2,7 @@ import streamlit as st
 from streamlit_chat import message
 import pandas as pd
 import numpy as np
+from langchain.llms import OpenAI
 from langchain.chat_models import ChatOpenAI
 from langchain.schema import (
     AIMessage,
