@@ -1,5 +1,6 @@
 import streamlit as st
 from streamlit_chat import message
+import langchain
 import pandas as pd
 import numpy as np
 from langchain.chat_models import ChatOpenAI
