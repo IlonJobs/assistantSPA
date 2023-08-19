@@ -17,8 +17,24 @@ from langchain.schema import (
 
 def main():
     st.set_page_config(page_title="Help assistant")
-    st.title('title')
-    st.header('Help assistant.')
+    # Добавляем CSS-стили для зафиксированного заголовка
+    st.markdown(
+        """
+        <style>
+        .st-eb {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background-color: white;
+            padding: 10px;
+            box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
+    st.title('Help assistant. fix')
+    # st.header('Help assistant.')
 
     # Включение автоматической прокрутки
     st.markdown("""
