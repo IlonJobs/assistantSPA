@@ -18,7 +18,7 @@ from langchain.schema import (
 def main():
     st.set_page_config(page_title="Help assistant")
     st.title('title')
-    st.header('Help assistant header')
+    st.header('Help assistant.')
 
     # Включение автоматической прокрутки
     st.markdown("""
