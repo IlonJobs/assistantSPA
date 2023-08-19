@@ -4,3 +4,4 @@ langchain
 langchain.chat_models
 langchain.schema
 ChatOpenAI
+openai
