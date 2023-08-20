@@ -1,7 +1,10 @@
 import streamlit as st
 from streamlit_chat import message
+from langchain.vectorstores import Qdrant
+import qdrant_client
 import pandas as pd
 import numpy as np
+import os
 from langchain.chat_models import ChatOpenAI
 from langchain.schema import (
     AIMessage,
@@ -9,45 +12,42 @@ from langchain.schema import (
     SystemMessage
 )
 
-# This is a sample Python script.
-
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
-
 
 def main():
     st.set_page_config(page_title="Help assistant")
-    # Добавляем CSS-стили для зафиксированного заголовка
-    st.markdown(
-        """
-        <style>
-        .st-eb {
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            background-color: white;
-            padding: 10px;
-            box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
-        }
-        </style>
-        """,
-        unsafe_allow_html=True
-    )
-    st.title('Help assistant. fix')
-    # st.header('Help assistant.')
 
-    # Включение автоматической прокрутки
-    st.markdown("""
-        <style>
-            .message {
-                overflow-y: scroll !important;
-                max-height: 400px;
-            }
-        </style>
-    """, unsafe_allow_html=True)
+    st.title('Help assistant.')
 
-    chat = ChatOpenAI(model_name='gpt-3.5-turbo',
-                      temperature=0)
+    # Добавление элементов в боковую панель
+    with st.sidebar:
+        st.subheader('Обновить данные в хранилище')
+        collectionName = st.text_input('Collection name:',help='enter a collection name to add your data')
+        create_new_collection = st.checkbox('rewrite collection',help='rewrite collection if it exist')
+        update_docs = st.file_uploader('Upload your files and click Process button',accept_multiple_files=True)
+        if st.button('Process'):
+            with st.container():
+                st.write(collectionName)
+                st.write('Create a new collection:',create_new_collection)
+                # create your client
+                client = qdrant_client.QdrantClient(st.secrets["QDRANT_HOST"],
+                                                    api_key = st.secrets["QDRANT_API_KEY"]
+                    )
+                if create_new_collection:
+                    # !!!!create collection!!!!!
+                    collection_config = qdrant_client.http.models.VectorParams(
+                        size=1536,  # 768 for instructor-xl, 1536 for OpenAI
+                        distance=qdrant_client.http.models.Distance.COSINE
+                    )
+
+                    status_operation = client.recreate_collection(
+                        collection_name=collectionName,
+                        vectors_config=collection_config
+                    )
+                    st.write('Status:',status_operation)
+
+    chat_container = st.container()
+
+    chatAI = ChatOpenAI(temperature=0,model_name='gpt-3.5-turbo')
 
     # Initialize chat history
     if "messages" not in st.session_state:
@@ -56,22 +56,21 @@ def main():
     # Display chat messages from history on app rerun
     for mes in st.session_state.messages:
         if mes.type=='human':
-            message(mes.content, is_user=True,allow_html=True)
+            with chat_container: message(mes.content, is_user=True,allow_html=True)
         elif mes.type=='ai':
-            message(mes.content,allow_html=True)
-
+            with chat_container: message(mes.content,allow_html=True)
 
     # React to user input
-    if user_question := st.chat_input("What is up?"):
+    if user_question := st.chat_input("Напишите Ваш вопрос..."):
 
-        message(user_question, is_user=True)  # align's the message to the right
+        with chat_container: message(user_question, is_user=True)  # align's the message to the right
         # Add user message to chat history
         # st.session_state.messages.append({"role": "user", "content": prompt})
         st.session_state.messages.append(HumanMessage(content=user_question))
-        with st.spinner('Thinking...'):
-            response = chat(st.session_state.messages)
+        with st.spinner('Формулирую ответ...'):
+            response = chatAI(st.session_state.messages)
 
-        message(response.content,allow_html=True)  # align's the message to the right
+        with chat_container: message(response.content,allow_html=True)
         # Add assistant response to chat history
         # st.session_state.messages.append({"role": "assistant", "content": response})
         st.session_state.messages.append(AIMessage(content=response.content))
