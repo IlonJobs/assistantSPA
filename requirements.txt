@@ -3,4 +3,7 @@ streamlit_chat
 langchain[all]
 streamlit_option_menu
 qdrant_client
+pandasai
+lxml
+bs4
 

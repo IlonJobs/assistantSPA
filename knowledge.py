@@ -48,7 +48,7 @@ def app():
     # collectionName = st.text_input('Укажите имя коллекции в БД:', help='укажите имя collection в БД')
     collectionName = st.secrets["QDRANT_COLLECTION_NAME"]
     create_new_collection = st.checkbox('перезаписать коллекцию', help='перезаписываеть коллекцию, если она уже существует')
-    update_docs = st.file_uploader('Загрузите файлы и нажмите кнопку Выполнить', accept_multiple_files=True,type="txt")
+    update_docs = st.file_uploader('Загрузите файлы и нажмите кнопку **Выполнить**', accept_multiple_files=True,type="txt")
     if st.button('Выполнить'):
         with st.container():
             st.write(collectionName)

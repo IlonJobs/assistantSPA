@@ -1,8 +1,8 @@
 import streamlit as st
 from streamlit_option_menu import option_menu
-import settings_page, chat,about,knowledge
+import settings_page, chat,about,knowledge,read_excel
 
-st.set_page_config(page_title="Help assistant")
+st.set_page_config(layout='wide')
 
 class MultiApp:
 
@@ -20,8 +20,8 @@ class MultiApp:
         with st.sidebar:
             app = option_menu(
                 menu_title='Navigation ',
-                options=['About', 'Chat','Knowledge base','Settings' ],
-                icons=['house-fill', 'chat-fill', 'book', 'person-circle'],
+                options=['Описание', 'Чат','База знаний','Анализ файла','Настройки' ],
+                icons=['house-fill', 'chat-fill', 'book','filetype-xlsx', 'person-circle'],
                 menu_icon='chat-text-fill',
                 default_index=1,
                 styles={
@@ -33,13 +33,15 @@ class MultiApp:
 
             )
 
-        if app == "About":
+        if app == "Описание":
             about.app()
-        if app == "Knowledge base":
+        if app == "База знаний":
             knowledge.app()
-        if app == "Chat":
+        if app == "Анализ файла":
+            read_excel.app()
+        if app == "Чат":
             chat.main()
-        if app == "Settings":
+        if app == "Настройки":
             settings_page.app()
 
 
