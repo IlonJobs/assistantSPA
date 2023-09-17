@@ -5,4 +5,3 @@ def app():
     st.markdown('---')
     st.write('OpenAI')
     st.write('Qdrant')
-  
