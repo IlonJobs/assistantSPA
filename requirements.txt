@@ -7,3 +7,4 @@ pandasai
 lxml
 bs4
 gigachat
+tiktoken
