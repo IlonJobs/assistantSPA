@@ -3,7 +3,7 @@ streamlit_chat
 langchain[all]
 streamlit_option_menu
 qdrant_client
-pandasai[all]
+pandasai
 lxml
 bs4
 gigachat
