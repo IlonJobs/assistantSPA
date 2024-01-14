@@ -12,6 +12,7 @@ def app():
     if not st.session_state.settings_isset:
         st.warning('Не заполнены настройки!')
     else:
+        st.write("Временно отключено!")
         # uploaded_file = st.file_uploader('Загрузите файлы и нажмите кнопку **Прочитать файлы**',type="xlsx")
         # if st.button('Прочитать файлы'):
         #     if uploaded_file is not None:
