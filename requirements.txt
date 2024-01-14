@@ -6,4 +6,4 @@ qdrant_client
 pandasai[all]
 lxml
 bs4
-gigachat[all]
+gigachat
