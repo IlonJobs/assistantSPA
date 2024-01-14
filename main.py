@@ -33,6 +33,10 @@ class MultiApp:
 
             )
 
+        if "settings_isset" not in st.session_state:
+            st.session_state.settings_isset = False
+        if "default_settings" not in st.session_state:
+            st.session_state.default_settings = False
         if app == "Описание":
             about.app()
         if app == "База знаний":
